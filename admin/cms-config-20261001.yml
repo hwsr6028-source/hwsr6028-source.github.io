@@ -1,0 +1,21 @@
+backend:
+  name: turbo-github
+  turbo_site_id: 24fa01dd-6fb4-482a-91c5-b97db8fd7041
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "column"
+    label: "FINE COLUMN"
+    folder: "_posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "레이아웃", name: "layout", widget: "hidden", default: "post" }
+      - { label: "제목", name: "title", widget: "string" }
+      - { label: "발행일", name: "date", widget: "datetime" }
+      - { label: "본문", name: "body", widget: "markdown" }
