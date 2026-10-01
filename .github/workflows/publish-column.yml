@@ -43,7 +43,16 @@ jobs:
           seo_title = section("SEO 제목")
           description = section("검색 설명")
           category = section("카테고리")
+          thumbnail_md = section("대표 이미지")
           content = section("본문")
+
+          thumbnail = ""
+          if thumbnail_md:
+              m = re.search(r'!\[[^\]]*\]\((https?://[^)]+)\)', thumbnail_md)
+              if not m:
+                  m = re.search(r'(https?://\S+)', thumbnail_md)
+              if m:
+                  thumbnail = m.group(1).strip()
 
           if not title or not description or not category or not content:
               raise SystemExit("필수 입력값을 찾지 못했습니다.")
@@ -104,6 +113,7 @@ jobs:
               f"description: {q(description)}",
               f"category: {q(category)}",
               f"date: {today} {now.strftime('%H:%M:%S')} +0900",
+              *([f"thumbnail: {q(thumbnail)}"] if thumbnail else []),
               "---",
               "",
               content,
