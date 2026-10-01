@@ -39,9 +39,9 @@ jobs:
               v = m.group(1).strip()
               return "" if v == "_No response_" else v
 
-          title = section("제목")
-          seo_title = section("SEO 제목")
-          description = section("검색 설명")
+          title = section("글 제목") or section("제목")
+          seo_title = section("검색 노출 제목") or section("SEO 제목")
+          description = section("검색 노출 설명") or section("검색 설명")
           category = section("카테고리")
           thumbnail_md = section("대표 이미지")
           content = section("본문")
@@ -49,6 +49,8 @@ jobs:
           thumbnail = ""
           if thumbnail_md:
               m = re.search(r'!\[[^\]]*\]\((https?://[^)]+)\)', thumbnail_md)
+              if not m:
+                  m = re.search(r'<img[^>]+src=["\'](https?://[^"\']+)["\']', thumbnail_md)
               if not m:
                   m = re.search(r'(https?://\S+)', thumbnail_md)
               if m:
