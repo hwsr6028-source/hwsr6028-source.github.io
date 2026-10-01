@@ -1,5 +1,5 @@
 name: "FINE COLUMN 새 글 등록"
-description: "폼을 작성하면 자동으로 인사이트 칼럼 페이지가 생성됩니다."
+description: "글과 이미지를 함께 등록하면 자동으로 인사이트 페이지가 생성됩니다."
 title: "[칼럼] "
 body:
   - type: markdown
@@ -8,6 +8,7 @@ body:
         ## FINE COLUMN 등록
         아래 항목을 작성한 뒤 **Create**를 누르면 자동 발행됩니다.
         URL은 제목을 기준으로 자동 생성됩니다.
+        이미지는 입력창에 **드래그앤드롭 또는 붙여넣기**하면 됩니다.
 
   - type: input
     id: title
@@ -53,14 +54,25 @@ body:
       required: true
 
   - type: textarea
+    id: thumbnail
+    attributes:
+      label: "대표 이미지"
+      description: "이미지 파일을 이 칸에 드래그앤드롭하거나 붙여넣으세요. 업로드가 끝나면 생성된 이미지 문구는 그대로 두시면 됩니다."
+      placeholder: "여기에 대표 이미지를 드래그앤드롭"
+    validations:
+      required: false
+
+  - type: textarea
     id: body
     attributes:
       label: "본문"
-      description: "소제목은 ##, 하위 소제목은 ### 를 사용해주세요. 상세페이지 목차는 자동 생성됩니다."
+      description: "소제목은 ##, 하위 소제목은 ### 를 사용해주세요. 본문 중간에도 이미지를 원하는 위치에 드래그앤드롭할 수 있습니다."
       placeholder: |
         ## 리쥬란 시술 횟수는 모두 같지 않습니다
 
         피부 상태와 개선 목표에 따라 시술 계획은 달라질 수 있습니다.
+
+        여기에 이미지를 드래그앤드롭할 수 있습니다.
 
         ## 시술 전 무엇을 확인해야 하나요?
 
