@@ -7,6 +7,8 @@ on:
 permissions:
   contents: write
   issues: write
+  pages: write
+  id-token: write
 
 jobs:
   publish:
@@ -118,6 +120,26 @@ jobs:
           git add _posts
           git commit -m "Publish insight from issue #${{ github.event.issue.number }}"
           git push origin main
+
+      - name: Pull published commit
+        run: |
+          git pull --rebase origin main
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
       - name: Comment published URL and close issue
         uses: actions/github-script@v7
