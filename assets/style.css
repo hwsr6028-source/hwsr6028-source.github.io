@@ -71,3 +71,17 @@ footer{padding:50px 8vw;border-top:1px solid var(--line);color:var(--muted)}foot
 .insight-cover img{display:block;width:100%;height:auto;border-radius:22px}
 .insight-detail .article-body img{display:block;max-width:100%;height:auto;margin:34px auto;border-radius:18px}
 .insight-detail .article-body p:has(img){margin:34px 0}
+
+/* Medical information header */
+.info-logo{display:flex;flex-direction:column;gap:2px;line-height:1.15}
+.info-logo strong{font-size:23px;letter-spacing:-.8px;color:var(--navy)}
+.info-logo span{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:0}
+.site-header nav a:not(.btn){color:#3e4653}
+.site-header nav a:not(.btn):hover{color:var(--orange)}
+
+/* Clickable category filters */
+.insight-filter .filter{cursor:pointer;transition:.18s ease;background:#fff}
+.insight-filter .filter:hover{border-color:var(--navy)}
+.insight-filter .filter.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.insight-row[hidden]{display:none}
+.insight-empty{padding:70px 0;text-align:center;color:var(--muted);border-bottom:1px solid var(--line)}
