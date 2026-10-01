@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hwsr6028-source.github.io/sitemap.xml
