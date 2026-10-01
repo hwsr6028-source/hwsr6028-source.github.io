@@ -84,7 +84,7 @@ jobs:
               f"seo_title: {q(seo_title or title + ' | id clinic')}",
               f"description: {q(description)}",
               f"category: {q(category)}",
-              f"date: {today} {now.strftime('%H:%M:%S')} +0900",
+              f"date: {today} 00:00:00 +0900",
               *([f"thumbnail: {q(thumbnail)}"] if thumbnail else []),
               "---",
               "",
