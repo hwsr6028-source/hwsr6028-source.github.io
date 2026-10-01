@@ -1,0 +1,111 @@
+name: Publish FINE COLUMN from Issue
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  publish:
+    if: contains(github.event.issue.labels.*.name, 'publish-column')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Create column markdown
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: |
+          python - <<'PY'
+          import os, re, pathlib, datetime
+
+          body = os.environ["ISSUE_BODY"]
+          issue_no = os.environ["ISSUE_NUMBER"]
+
+          def section(name):
+              pattern = rf"### {re.escape(name)}\s*\n\s*(.*?)(?=\n### |\Z)"
+              m = re.search(pattern, body, re.S)
+              if not m:
+                  return ""
+              value = m.group(1).strip()
+              if value == "_No response_":
+                  return ""
+              return value
+
+          title = section("제목")
+          seo_title = section("SEO 제목")
+          description = section("검색 설명")
+          category = section("카테고리")
+          slug = section("URL 영문명 (선택)")
+          content = section("본문")
+
+          if not title or not description or not category or not content:
+              raise SystemExit("필수 입력값을 찾지 못했습니다.")
+
+          if not slug:
+              slug = f"post-{issue_no}"
+          slug = slug.lower().strip()
+          slug = re.sub(r"[^a-z0-9-]+", "-", slug)
+          slug = re.sub(r"-+", "-", slug).strip("-") or f"post-{issue_no}"
+
+          today = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).strftime("%Y-%m-%d")
+          target = pathlib.Path("_posts") / f"{today}-{slug}.md"
+          target.parent.mkdir(exist_ok=True)
+
+          def yaml_quote(s):
+              return '"' + s.replace('\\', '\\\\').replace('"', '\\"').replace("\n", " ") + '"'
+
+          lines = [
+              "---",
+              "layout: post",
+              f"title: {yaml_quote(title)}",
+              f"seo_title: {yaml_quote(seo_title or title + ' | id clinic')}",
+              f"description: {yaml_quote(description)}",
+              f"category: {yaml_quote(category)}",
+              f"date: {today} 09:00:00 +0900",
+              "---",
+              "",
+              content,
+              ""
+          ]
+          target.write_text("\n".join(lines), encoding="utf-8")
+          pathlib.Path("/tmp/generated_path").write_text(str(target), encoding="utf-8")
+          pathlib.Path("/tmp/generated_slug").write_text(slug, encoding="utf-8")
+          PY
+
+      - name: Commit and push
+        run: |
+          git config user.name "FINE COLUMN Bot"
+          git config user.email "actions@github.com"
+          git add _posts
+          git commit -m "Publish column from issue #${{ github.event.issue.number }}"
+          git push origin main
+
+      - name: Comment published URL
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const slug = fs.readFileSync('/tmp/generated_slug', 'utf8').trim();
+            const url = 'https://hwsr6028-source.github.io/column/' + slug + '/';
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: '✅ 칼럼 발행이 완료되었습니다.\n\n' + url
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            });
