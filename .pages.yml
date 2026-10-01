@@ -1,0 +1,100 @@
+media:
+  input: assets/uploads
+  output: /assets/uploads
+
+content:
+  - name: columns
+    label: FINE COLUMN
+    type: collection
+    path: _posts
+    format: yaml-frontmatter
+    filename:
+      template: "{year}-{month}-{day}-{title}.md"
+      field: create
+    view:
+      fields: [title, category, date]
+      primary: title
+      sort: [date, title, category]
+      search: [title, seo_title, description, category, body]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: layout
+        label: 레이아웃
+        type: string
+        hidden: true
+        required: true
+        default: post
+
+      - name: title
+        label: 제목
+        type: string
+        required: true
+        description: 검색 사용자가 실제로 궁금해할 질문형 제목을 권장합니다.
+
+      - name: seo_title
+        label: SEO 제목
+        type: string
+        required: false
+        description: 검색결과에 노출될 제목입니다. 비워두면 일반 제목이 사용됩니다.
+
+      - name: description
+        label: 검색 설명
+        type: text
+        required: true
+        description: 네이버/구글 검색결과 설명용 요약문입니다.
+
+      - name: category
+        label: 카테고리
+        type: select
+        required: true
+        options:
+          values:
+            - 리프팅
+            - 스킨부스터
+            - 색소
+            - 여드름
+            - 톡신/필러
+            - 제모
+            - 바디
+            - 피부관리
+
+      - name: date
+        label: 발행일
+        type: date
+        required: true
+        options:
+          time: true
+
+      - name: modified
+        label: 수정일
+        type: date
+        required: false
+        options:
+          time: true
+
+      - name: thumbnail
+        label: 대표 이미지
+        type: image
+        required: false
+
+      - name: body
+        label: 본문
+        type: rich-text
+        required: true
+        options:
+          format: markdown
+          switcher: true
+          media: true
+          path: assets/uploads
+          rename: true
+
+settings:
+  commit:
+    identity: app
+    templates:
+      create: "Create column: {filename}"
+      update: "Update column: {filename}"
+      delete: "Delete column: {filename}"
+      rename: "Rename column: {oldFilename} -> {newFilename}"
