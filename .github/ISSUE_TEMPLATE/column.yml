@@ -1,0 +1,79 @@
+name: "FINE COLUMN 새 글 등록"
+description: "폼을 작성하면 자동으로 칼럼 페이지가 생성됩니다."
+title: "[칼럼] "
+labels:
+  - "publish-column"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## FINE COLUMN 등록
+        아래 항목을 작성한 뒤 **Submit new issue**를 누르면 자동 발행됩니다.
+
+  - type: input
+    id: title
+    attributes:
+      label: "제목"
+      description: "칼럼 제목을 입력해주세요."
+      placeholder: "예: 리쥬란은 몇 회 받아야 할까요?"
+    validations:
+      required: true
+
+  - type: input
+    id: seo_title
+    attributes:
+      label: "SEO 제목"
+      description: "검색결과에 노출될 제목입니다."
+      placeholder: "예: 리쥬란 권장 횟수와 시술 간격 | id clinic"
+    validations:
+      required: false
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "검색 설명"
+      description: "검색결과에 노출될 1~2문장 요약입니다."
+      placeholder: "예: 리쥬란 시술 횟수와 간격이 피부 상태에 따라 어떻게 달라질 수 있는지 알아봅니다."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: "카테고리"
+      options:
+        - 리프팅
+        - 스킨부스터
+        - 색소
+        - 여드름
+        - 톡신/필러
+        - 제모
+        - 바디
+        - 피부관리
+    validations:
+      required: true
+
+  - type: input
+    id: slug
+    attributes:
+      label: "URL 영문명 (선택)"
+      description: "비워두면 post-이슈번호 형태로 자동 생성됩니다."
+      placeholder: "예: rejuran-frequency"
+    validations:
+      required: false
+
+  - type: textarea
+    id: body
+    attributes:
+      label: "본문"
+      description: "Markdown 사용 가능. 소제목은 ## 또는 ###를 사용해주세요."
+      placeholder: |
+        ## 리쥬란 시술 횟수는 모두 같지 않습니다
+
+        피부 상태와 개선 목표에 따라 시술 계획은 달라질 수 있습니다.
+
+        ## 시술 전 무엇을 확인해야 하나요?
+
+        현재 피부 상태와 과거 시술 이력 등을 함께 확인하는 것이 좋습니다.
+    validations:
+      required: true
