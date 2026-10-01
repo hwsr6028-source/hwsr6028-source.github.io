@@ -28,11 +28,7 @@ collections:
     format: "frontmatter"
     identifier_field: "title"
     summary: "{{date}} · {{category}} · {{title}}"
-    sortable_fields:
-      fields: ["date", "title", "category"]
-      default:
-        field: date
-        direction: Descending
+    sortable_fields: ["date", "title", "category"]
     view_filters:
       - label: "리프팅"
         field: category
