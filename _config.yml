@@ -4,7 +4,7 @@ lang: ko-KR
 timezone: Asia/Seoul
 url: "https://hwsr6028-source.github.io"
 baseurl: ""
-permalink: /column/:title/
+permalink: /insight/:title/
 markdown: kramdown
 
 plugins:
