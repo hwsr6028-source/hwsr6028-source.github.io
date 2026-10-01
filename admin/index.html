@@ -5,8 +5,103 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>FINE COLUMN 관리자</title>
+  <script>window.CMS_MANUAL_INIT = true;</script>
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.8.0/dist/decap-cms.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/decap-cms@beta/dist/decap-cms.js"></script>
+  <script>
+    const { initCMS } = window;
+
+    initCMS({
+      config: {
+        load_config_file: false,
+
+        backend: {
+          name: "turbo-github",
+          turbo_site_id: "4056a752-db63-42ab-b96f-febce9399453",
+          branch: "main"
+        },
+
+        publish_mode: "simple",
+
+        site_url: "https://hwsr6028-source.github.io",
+        display_url: "https://hwsr6028-source.github.io",
+
+        media_folder: "assets/uploads",
+        public_folder: "/assets/uploads",
+
+        slug: {
+          encoding: "ascii",
+          clean_accents: true,
+          sanitize_replacement: "-"
+        },
+
+        collections: [
+          {
+            name: "column",
+            label: "FINE COLUMN",
+            label_singular: "칼럼",
+            folder: "_posts",
+            create: true,
+            delete: true,
+            extension: "md",
+            format: "frontmatter",
+            identifier_field: "title",
+            summary: "{{date}} · {{category}} · {{title}}",
+
+            view_filters: [
+              { label: "리프팅", field: "category", pattern: "리프팅" },
+              { label: "스킨부스터", field: "category", pattern: "스킨부스터" },
+              { label: "색소", field: "category", pattern: "색소" },
+              { label: "여드름", field: "category", pattern: "여드름" },
+              { label: "톡신/필러", field: "category", pattern: "톡신/필러" }
+            ],
+
+            fields: [
+              { label: "레이아웃", name: "layout", widget: "hidden", default: "post" },
+              { label: "제목", name: "title", widget: "string", hint: "검색 사용자가 실제로 궁금해할 질문형 제목을 권장합니다." },
+              { label: "SEO 제목", name: "seo_title", widget: "string", required: false },
+              { label: "검색 설명", name: "description", widget: "text" },
+              {
+                label: "카테고리",
+                name: "category",
+                widget: "select",
+                options: ["리프팅","스킨부스터","색소","여드름","톡신/필러","제모","바디","피부관리"]
+              },
+              {
+                label: "발행일",
+                name: "date",
+                widget: "datetime",
+                format: "YYYY-MM-DD HH:mm:ss Z",
+                date_format: "YYYY-MM-DD",
+                time_format: "HH:mm"
+              },
+              {
+                label: "수정일",
+                name: "modified",
+                widget: "datetime",
+                required: false,
+                format: "YYYY-MM-DD HH:mm:ss Z",
+                date_format: "YYYY-MM-DD",
+                time_format: "HH:mm"
+              },
+              {
+                label: "대표 이미지",
+                name: "thumbnail",
+                widget: "image",
+                required: false
+              },
+              {
+                label: "본문",
+                name: "body",
+                widget: "markdown",
+                hint: "H2/H3 소제목을 활용해 검색엔진이 이해하기 쉬운 구조로 작성하세요."
+              }
+            ]
+          }
+        ]
+      }
+    });
+  </script>
 </body>
 </html>
