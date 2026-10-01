@@ -1,0 +1,90 @@
+name: Delete FINE COLUMN from Issue
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+  id-token: write
+
+jobs:
+  delete:
+    if: startsWith(github.event.issue.title, '[삭제]')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Delete requested post
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          python - <<'PY'
+          import os, re, pathlib
+
+          body = os.environ.get("ISSUE_BODY", "")
+          m = re.search(r"파일경로:\s*([^\s]+)", body)
+          if not m:
+              raise SystemExit("삭제할 파일 경로를 찾지 못했습니다.")
+
+          path = m.group(1).strip()
+          if not path.startswith("_posts/") or not path.endswith(".md"):
+              raise SystemExit("허용되지 않은 파일 경로입니다.")
+
+          target = pathlib.Path(path)
+          if not target.exists():
+              raise SystemExit(f"파일이 존재하지 않습니다: {path}")
+
+          target.unlink()
+          pathlib.Path("/tmp/deleted_path").write_text(path, encoding="utf-8")
+          PY
+
+      - name: Commit deletion
+        run: |
+          git config user.name "FINE COLUMN Bot"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -m "Delete insight from issue #${{ github.event.issue.number }}"
+          git push origin main
+
+      - name: Pull latest
+        run: git pull --rebase origin main
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+
+      - name: Close delete request
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: '✅ 글 삭제와 사이트 재배포가 완료되었습니다.'
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            });
