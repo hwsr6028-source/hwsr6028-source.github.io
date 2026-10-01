@@ -66,3 +66,8 @@ footer{padding:50px 8vw;border-top:1px solid var(--line);color:var(--muted)}foot
   .insight-title h1{font-size:40px;letter-spacing:-2px}
   .insight-lead{font-size:17px}
 }
+
+.insight-cover{max-width:970px;margin:0 auto 64px}
+.insight-cover img{display:block;width:100%;height:auto;border-radius:22px}
+.insight-detail .article-body img{display:block;max-width:100%;height:auto;margin:34px auto;border-radius:18px}
+.insight-detail .article-body p:has(img){margin:34px 0}
