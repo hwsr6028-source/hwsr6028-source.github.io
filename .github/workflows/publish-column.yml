@@ -57,45 +57,15 @@ jobs:
           if not title or not description or not category or not content:
               raise SystemExit("필수 입력값을 찾지 못했습니다.")
 
-          brand_map = {
-              "아이리쥬란":"eye-rejuran","리쥬란":"rejuran","울쎄라피 프라임":"ultherapy-prime",
-              "울쎄라프라임":"ultherapy-prime","울쎄라":"ulthera","써마지 FLX":"thermage-flx",
-              "써마지":"thermage","온다":"onda","피코토닝":"pico-toning","피코슈어":"picosure",
-              "쥬베룩":"juvelook","리투오":"re2o","레티젠":"letigen","보톡스":"tox",
-              "필러":"filler","스킨부스터":"skin-booster","여드름":"acne","리프팅":"lifting",
-              "색소":"pigmentation","기미":"melasma","제모":"hair-removal"
-          }
-
-          CHO=["g","kk","n","d","tt","r","m","b","pp","s","ss","","j","jj","ch","k","t","p","h"]
-          JUNG=["a","ae","ya","yae","eo","e","yeo","ye","o","wa","wae","oe","yo","u","wo","we","wi","yu","eu","ui","i"]
-          JONG=["","k","k","ks","n","nj","nh","t","l","lk","lm","lb","ls","lt","lp","lh","m","p","ps","t","t","ng","t","t","k","t","p","h"]
-
-          def romanize_char(ch):
-              code=ord(ch)
-              if 0xAC00 <= code <= 0xD7A3:
-                  n=code-0xAC00
-                  return CHO[n//588]+JUNG[(n%588)//28]+JONG[n%28]
-              if ch.isascii() and ch.isalnum():
-                  return ch.lower()
-              return "-"
-
-          work=title
-          tokens={}
-          for ko in sorted(brand_map,key=len,reverse=True):
-              if ko in work:
-                  token=f"zztoken{len(tokens)}zz"
-                  tokens[token]=brand_map[ko]
-                  work=work.replace(ko,token)
-
-          raw="".join(romanize_char(ch) for ch in work)
-          for token,value in tokens.items():
-              raw=raw.replace(token,value)
-
-          slug=re.sub(r"[^a-z0-9]+","-",raw.lower())
-          slug=re.sub(r"-+","-",slug).strip("-")
+          # 제목을 그대로 활용한 한글 URL 슬러그
+          # 예: "포텐자 모공 흉터 탄력 복합 RF 마이크로니들 가이드"
+          #  -> "포텐자-모공-흉터-탄력-복합-rf-마이크로니들-가이드"
+          slug = title.strip().lower()
+          slug = re.sub(r"[^0-9a-z가-힣]+", "-", slug)
+          slug = re.sub(r"-+", "-", slug).strip("-")
           if not slug:
-              slug=f"insight-{issue_no}"
-          slug=slug[:90].strip("-")
+              slug = f"insight-{issue_no}"
+          slug = slug[:120].strip("-")
 
           now=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
           today=now.strftime("%Y-%m-%d")
