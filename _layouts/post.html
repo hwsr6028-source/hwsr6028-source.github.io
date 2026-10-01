@@ -1,22 +1,58 @@
 ---
 layout: default
 ---
-<main class="article-page">
-<div class="breadcrumb"><a href="{{ '/' | relative_url }}">홈</a> / <a href="{{ '/column/' | relative_url }}">FINE COLUMN</a> / {{ page.category }}</div>
-<article>
-<header class="article-title">
-<span class="tag">{{ page.category }}</span>
-<h1>{{ page.title }}</h1>
-{% if page.description %}<p class="lead">{{ page.description }}</p>{% endif %}
-<div class="meta">{{ page.date | date: "%Y.%m.%d" }} · id clinic 의료정보 칼럼</div>
-</header>
-<div class="article-cover"></div>
-<div class="article-body">{{ content }}
-<p class="disclaimer">※ 본 콘텐츠는 일반적인 의료정보 제공을 위한 자료이며, 개인의 피부 상태 및 시술 적합성은 의료진 상담을 통해 확인해야 합니다.</p>
-</div>
-</article>
-<section class="related"><p class="eyebrow">MORE FINE COLUMN</p><h2>함께 읽으면 좋은 칼럼</h2><div class="cards three">
-{% assign related_count = 0 %}{% for post in site.posts %}{% if post.url != page.url and post.category == page.category and related_count < 3 %}
-<a class="mini-card" href="{{ post.url | relative_url }}"><b>{{ post.title }}</b><span>{{ post.category }}</span></a>
-{% assign related_count = related_count | plus: 1 %}{% endif %}{% endfor %}
-</div></section></main>
+<main class="insight-detail">
+  <div class="insight-breadcrumb"><a href="{{ '/blog/insight/' | relative_url }}">인사이트</a> / {{ page.category }}</div>
+
+  <article>
+    <header class="insight-title">
+      <p class="eyebrow">FINE BEAUTY INSIGHT</p>
+      <h1>{{ page.title }}</h1>
+      {% if page.description %}<p class="insight-lead">{{ page.description }}</p>{% endif %}
+      <div class="insight-meta"><span>인사이트 · {{ page.category }}</span><time>{{ page.date | date: "%Y-%m-%d" }}</time></div>
+    </header>
+
+    <div class="insight-content-grid">
+      <aside class="insight-toc">
+        <strong>목차</strong>
+        <nav id="toc"></nav>
+      </aside>
+
+      <div class="article-body" id="articleBody">
+        {{ content }}
+        <p class="disclaimer">※ 본 콘텐츠는 일반적인 의료정보 제공을 위한 자료이며, 개인의 피부 상태 및 시술 적합성은 의료진 상담을 통해 확인해야 합니다.</p>
+      </div>
+    </div>
+  </article>
+
+  <section class="related insight-related">
+    <p class="eyebrow">RELATED INSIGHT</p>
+    <h2>함께 읽으면 좋은 인사이트</h2>
+    <div class="related-list">
+      {% assign related_count = 0 %}
+      {% for post in site.posts %}
+        {% if post.url != page.url and post.category == page.category and related_count < 3 %}
+        <a href="{{ post.url | relative_url }}"><strong>{{ post.title }}</strong><span>{{ post.date | date: "%Y-%m-%d" }}</span></a>
+        {% assign related_count = related_count | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const body=document.getElementById('articleBody');
+  const toc=document.getElementById('toc');
+  if(!body||!toc)return;
+  const hs=[...body.querySelectorAll('h2')];
+  hs.forEach((h,i)=>{
+    h.id='section-'+(i+1);
+    const a=document.createElement('a');
+    a.href='#'+h.id;
+    a.textContent=(i+1)+'. '+h.textContent;
+    toc.appendChild(a);
+  });
+  if(!hs.length && toc.parentElement) toc.parentElement.style.display='none';
+});
+</script>
