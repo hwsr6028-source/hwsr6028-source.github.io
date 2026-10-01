@@ -85,3 +85,8 @@ footer{padding:50px 8vw;border-top:1px solid var(--line);color:var(--muted)}foot
 .insight-filter .filter.active{background:var(--navy);border-color:var(--navy);color:#fff}
 .insight-row[hidden]{display:none}
 .insight-empty{padding:70px 0;text-align:center;color:var(--muted);border-bottom:1px solid var(--line)}
+
+.thumb-image{overflow:hidden;background:#f3f4f7}
+.thumb-image img{display:block;width:100%;height:100%;object-fit:cover}
+.thumb-empty{display:flex;align-items:center;justify-content:center;background:#f3f4f7;color:#9aa1ad}
+.thumb-empty span{font-size:13px;font-weight:700}
