@@ -1,39 +1,45 @@
-name: "FINE COLUMN 새 글 등록"
-description: "글과 이미지를 함께 등록하면 자동으로 인사이트 페이지가 생성됩니다."
-title: "[칼럼] "
+name: "인사이트 새 글 발행"
+description: "제목·요약·본문·이미지를 입력하면 홈페이지에 자동 발행됩니다."
+title: "[칼럼] 새 인사이트 발행"
 body:
   - type: markdown
     attributes:
       value: |
-        ## FINE COLUMN 등록
-        아래 항목을 작성한 뒤 **Create**를 누르면 자동 발행됩니다.
-        URL은 제목을 기준으로 자동 생성됩니다.
-        이미지는 입력창에 **드래그앤드롭 또는 붙여넣기**하면 됩니다.
+        # 인사이트 새 글 등록
+
+        아래 항목만 작성한 뒤 맨 아래 **Create** 버튼을 눌러주세요.
+
+        **이미지 첨부 방법**
+        - 대표 이미지: 아래 ‘대표 이미지’ 칸에 파일을 드래그앤드롭 또는 붙여넣기
+        - 본문 이미지: ‘본문’ 칸에서 원하는 위치에 파일을 드래그앤드롭 또는 붙여넣기
+        - 이미지 업로드가 끝나면 자동으로 생기는 `![이미지](주소)` 문구는 지우지 마세요.
+
+        ※ 위쪽 GitHub 제목 입력칸은 이미 자동 입력되어 있으니 수정하지 않아도 됩니다.
 
   - type: input
     id: title
     attributes:
-      label: "제목"
-      description: "실제 인사이트 페이지에 노출될 칼럼 제목입니다."
-      placeholder: "예: 리쥬란은 몇 회 받아야 할까요?"
+      label: "글 제목"
+      description: "홈페이지 인사이트 상세페이지에 표시되는 실제 제목입니다."
+      placeholder: "예: 포텐자, 모공·흉터·탄력 개선에 어떻게 활용될까요?"
     validations:
       required: true
 
   - type: input
     id: seo_title
     attributes:
-      label: "SEO 제목"
-      description: "네이버/구글 검색결과에 노출될 제목입니다. 비워도 됩니다."
-      placeholder: "예: 리쥬란 권장 횟수와 시술 간격 | id clinic"
+      label: "검색 노출 제목"
+      description: "네이버·구글 검색결과에 표시할 제목입니다. 비워두면 글 제목을 사용합니다."
+      placeholder: "예: 포텐자 효과와 원리, 모공·흉터·탄력 개선 가이드 | id clinic"
     validations:
       required: false
 
   - type: textarea
     id: description
     attributes:
-      label: "검색 설명"
-      description: "검색결과와 인사이트 목록에 노출될 1~3문장 요약입니다."
-      placeholder: "예: 리쥬란 시술 횟수와 간격이 피부 상태에 따라 어떻게 달라질 수 있는지 알아봅니다."
+      label: "검색 노출 설명"
+      description: "검색결과와 인사이트 목록에 표시할 1~3문장 요약입니다."
+      placeholder: "예: 포텐자의 원리와 모공, 흉터, 탄력 개선에 어떻게 활용되는지 알아봅니다."
     validations:
       required: true
 
@@ -41,6 +47,7 @@ body:
     id: category
     attributes:
       label: "카테고리"
+      description: "글에 가장 잘 맞는 카테고리 하나를 선택해주세요."
       options:
         - 리프팅
         - 스킨부스터
@@ -57,8 +64,8 @@ body:
     id: thumbnail
     attributes:
       label: "대표 이미지"
-      description: "이미지 파일을 이 칸에 드래그앤드롭하거나 붙여넣으세요. 업로드가 끝나면 생성된 이미지 문구는 그대로 두시면 됩니다."
-      placeholder: "여기에 대표 이미지를 드래그앤드롭"
+      description: "이미지 파일을 이 칸에 드래그앤드롭하거나 Ctrl+V로 붙여넣어 주세요. 업로드된 이미지 문구는 그대로 두시면 됩니다."
+      placeholder: "여기에 대표 이미지를 드래그앤드롭 또는 붙여넣기"
     validations:
       required: false
 
@@ -66,16 +73,23 @@ body:
     id: body
     attributes:
       label: "본문"
-      description: "소제목은 ##, 하위 소제목은 ### 를 사용해주세요. 본문 중간에도 이미지를 원하는 위치에 드래그앤드롭할 수 있습니다."
+      description: "소제목은 ##, 하위 소제목은 ###를 사용해주세요. 원하는 문단 사이에 이미지를 바로 드래그앤드롭할 수 있습니다."
       placeholder: |
-        ## 리쥬란 시술 횟수는 모두 같지 않습니다
+        ## 포텐자는 어떤 시술인가요?
 
-        피부 상태와 개선 목표에 따라 시술 계획은 달라질 수 있습니다.
+        본문 내용을 입력해주세요.
 
-        여기에 이미지를 드래그앤드롭할 수 있습니다.
+        [이 위치에 이미지를 드래그앤드롭할 수 있습니다]
 
-        ## 시술 전 무엇을 확인해야 하나요?
+        ## 어떤 피부 고민에 활용되나요?
 
-        현재 피부 상태와 과거 시술 이력 등을 함께 확인하는 것이 좋습니다.
+        다음 본문 내용을 입력해주세요.
     validations:
       required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        작성이 끝났다면 아래 **Create** 버튼을 눌러주세요.
+        잠시 후 홈페이지에 자동 발행되며, 완료된 주소가 댓글로 안내됩니다.
