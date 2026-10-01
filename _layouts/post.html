@@ -12,6 +12,12 @@ layout: default
       <div class="insight-meta"><span>인사이트 · {{ page.category }}</span><time>{{ page.date | date: "%Y-%m-%d" }}</time></div>
     </header>
 
+    {% if page.thumbnail %}
+    <figure class="insight-cover">
+      <img src="{{ page.thumbnail }}" alt="{{ page.title }}">
+    </figure>
+    {% endif %}
+
     <div class="insight-content-grid">
       <aside class="insight-toc">
         <strong>목차</strong>
