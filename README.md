@@ -19,3 +19,4 @@
 
 ## 최초 GitHub Pages 설정
 Settings > Pages > Build and deployment > Source에서 GitHub Actions를 선택하세요.
+<!-- redeploy trigger -->
