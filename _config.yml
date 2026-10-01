@@ -1,0 +1,20 @@
+title: "FINE COLUMN | id clinic"
+description: "피부 시술과 피부 고민을 쉽고 정확하게 설명하는 id clinic 칼럼"
+lang: ko-KR
+timezone: Asia/Seoul
+url: "https://hwsr6028-source.github.io"
+baseurl: ""
+permalink: /column/:title/
+markdown: kramdown
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+feed:
+  path: rss.xml
+
+exclude:
+  - tools
+  - bulk_columns.csv
+  - README.md
