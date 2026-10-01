@@ -1,0 +1,38 @@
+backend:
+  name: turbo-github
+  turbo_site_id: 4056a752-db63-42ab-b96f-febce9399453
+  branch: main
+
+site_url: https://hwsr6028-source.github.io
+display_url: https://hwsr6028-source.github.io
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "column"
+    label: "FINE COLUMN"
+    folder: "_posts"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "레이아웃", name: "layout", widget: "hidden", default: "post" }
+      - { label: "제목", name: "title", widget: "string" }
+      - { label: "SEO 제목", name: "seo_title", widget: "string", required: false }
+      - { label: "검색 설명", name: "description", widget: "text" }
+      - label: "카테고리"
+        name: "category"
+        widget: "select"
+        options:
+          - "리프팅"
+          - "스킨부스터"
+          - "색소"
+          - "여드름"
+          - "톡신/필러"
+          - "제모"
+          - "바디"
+          - "피부관리"
+      - { label: "발행일", name: "date", widget: "datetime" }
+      - { label: "대표 이미지", name: "thumbnail", widget: "image", required: false }
+      - { label: "본문", name: "body", widget: "markdown" }
