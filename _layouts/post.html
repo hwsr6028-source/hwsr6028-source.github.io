@@ -14,7 +14,13 @@ layout: default
 
     {% if page.thumbnail %}
     <figure class="insight-cover">
+      {% if page.thumbnail_link %}
+      <a href="{{ page.thumbnail_link }}" target="_blank" rel="noopener">
+        <img src="{{ page.thumbnail }}" alt="{{ page.title }}">
+      </a>
+      {% else %}
       <img src="{{ page.thumbnail }}" alt="{{ page.title }}">
+      {% endif %}
     </figure>
     {% endif %}
 
