@@ -17,7 +17,14 @@ h1{font-size:28px;margin:0 0 8px} .desc{color:var(--muted);font-size:14px;line-h
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}
 input,textarea,select{width:100%;border:1px solid #d9dee7;border-radius:12px;padding:12px 13px;font:inherit;background:#fff;color:var(--ink)}
-textarea{min-height:92px;resize:vertical;line-height:1.6}
+textarea{min-height:140px;resize:vertical;line-height:1.75}
+.block textarea{min-height:420px}
+.file-upload{border:1px dashed #cfd5df;border-radius:12px;padding:14px;background:#fafbfc;margin-bottom:12px}
+.file-upload input[type=file]{display:block;width:100%;padding:8px 0}
+.file-preview{margin-top:10px}
+.file-preview img{display:block;max-width:100%;max-height:280px;object-fit:contain;border-radius:10px}
+.upload-help{font-size:12px;color:var(--muted);line-height:1.5;margin-top:6px}
+.image-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .field{margin-bottom:16px}
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 0 8px;border-top:1px solid var(--line);margin-top:18px}
 .toolbtn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 14px;font-weight:700;cursor:pointer}
@@ -81,8 +88,13 @@ textarea{min-height:92px;resize:vertical;line-height:1.6}
   </div>
 
   <div class="field">
-    <label>대표 이미지 URL</label>
-    <input id="thumbnail" placeholder="https://...">
+    <label>대표 이미지</label>
+    <div class="file-upload">
+      <input id="thumbnailFile" type="file" accept="image/*">
+      <div class="upload-help">파일을 선택하면 바로 미리보기 됩니다. 실제 발행용 이미지는 아래 URL도 입력해 주세요.</div>
+      <div id="thumbnailPreview" class="file-preview"></div>
+    </div>
+    <input id="thumbnail" placeholder="이미지 URL (https://...)">
   </div>
   <div class="field">
     <label>대표 이미지 클릭 링크</label>
@@ -143,9 +155,10 @@ function renderBlocks(){
   const el=document.getElementById('blocks');
   el.innerHTML=blocks.map((b,i)=>{
     if(b.type==='text') return '<div class="block">'+blockHeader(b.type,i)+
-      '<label>본문</label><textarea oninput="updateBlock('+i+',\'text\',this.value)" placeholder="문단 내용을 입력하세요">'+esc(b.text||'')+'</textarea></div>';
+      '<label>본문</label><textarea oninput="updateBlock('+i+',\'text\',this.value)" placeholder="여기에 본문을 길게 작성하세요.\n\n문단을 나누려면 한 줄 비워주세요.">'+esc(b.text||'')+'</textarea></div>';
 
     if(b.type==='image') return '<div class="block">'+blockHeader(b.type,i)+
+      '<div class="file-upload"><label>사진 첨부</label><input type="file" accept="image/*" onchange="previewBlockFile('+i+',this.files[0])"><div class="upload-help">선택한 사진은 미리보기용입니다. 발행하려면 이미지 URL도 입력해 주세요.</div><div id="blockPreview-'+i+'" class="file-preview">'+(b.preview?'<img src="'+esc(b.preview)+'">':'')+'</div></div>'+
       '<div class="field"><label>이미지 URL</label><input value="'+esc(b.url||'')+'" oninput="updateBlock('+i+',\'url\',this.value)" placeholder="https://..."></div>'+
       '<div class="field"><label>이미지 클릭 링크</label><input value="'+esc(b.link||'')+'" oninput="updateBlock('+i+',\'link\',this.value)" placeholder="https://..."></div>'+
       '<div class="field"><label>이미지 설명(alt)</label><input value="'+esc(b.alt||'')+'" oninput="updateBlock('+i+',\'alt\',this.value)" placeholder="이미지 설명"></div></div>';
@@ -194,6 +207,33 @@ function renderPreview(){
   document.addEventListener('input',e=>{if(e.target.id===id)renderPreview()});
   document.addEventListener('change',e=>{if(e.target.id===id)renderPreview()});
 });
+
+
+function previewBlockFile(i,file){
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    blocks[i].preview=e.target.result;
+    const el=document.getElementById('blockPreview-'+i);
+    if(el) el.innerHTML='<img src="'+e.target.result+'">';
+    renderPreview();
+  };
+  reader.readAsDataURL(file);
+}
+
+const thumbFile=document.getElementById('thumbnailFile');
+if(thumbFile){
+  thumbFile.addEventListener('change',function(){
+    const file=this.files&&this.files[0];
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=function(e){
+      const p=document.getElementById('thumbnailPreview');
+      if(p) p.innerHTML='<img src="'+e.target.result+'">';
+    };
+    reader.readAsDataURL(file);
+  });
+}
 
 function buildBody(){
   const title=document.getElementById('title').value.trim();
