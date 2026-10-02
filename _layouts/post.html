@@ -1,119 +1,175 @@
-<section class="treatment-promo">
-  <div class="treatment-promo-hero">
-    <div class="treatment-promo-copy">
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}</title>
+<meta name="description" content="{{ page.description | escape }}">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+<meta property="og:type" content="article">
+<meta property="og:title" content="{{ page.title | escape }}">
+<meta property="og:description" content="{{ page.description | escape }}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+<style>
+:root{--navy:#203568;--orange:#FF6B2C;--ink:#172033;--muted:#6f7785;--line:#e7eaf0}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:#fff}
+a{text-decoration:none;color:inherit}
+
+.detail-header{position:sticky;top:0;z-index:80;height:72px;padding:0 max(24px,6vw);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
+.detail-logo{display:flex;flex-direction:column;line-height:1.1;color:var(--navy)}
+.detail-logo strong{font-size:21px;letter-spacing:-.7px}.detail-logo span{font-size:11px;color:var(--muted);margin-top:3px}
+.detail-nav{display:flex;align-items:center;gap:22px;font-size:13px}
+.detail-nav .write{background:var(--orange);color:#fff;padding:10px 16px;border-radius:999px;font-weight:800}
+
+.promo{background:#f7f3ef}
+.promo-main{width:min(1320px,calc(100% - 48px));margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(440px,1fr);gap:48px;align-items:center;padding:62px 0 42px}
+.promo-copy{min-width:0}
+.promo-kicker{font-size:14px;font-weight:800;color:#61656e;margin:0 0 15px}
+.promo h1{font-size:clamp(46px,5.2vw,74px);line-height:1.07;letter-spacing:-2.8px;color:var(--navy);margin:0;word-break:keep-all}
+.promo-desc{font-size:17px;line-height:1.75;color:var(--muted);max-width:610px;margin:22px 0 0}
+.promo-price{font-size:clamp(40px,4.3vw,62px);font-weight:900;letter-spacing:-2px;margin-top:24px}
+.promo-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.promo-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border-radius:999px;font-size:14px;font-weight:800}
+.promo-btn.primary{background:var(--orange);color:#fff}.promo-btn.secondary{background:#fff;border:1px solid #dce1e8;color:var(--navy)}
+
+.promo-image{min-height:460px;border-radius:30px;overflow:hidden;background:#ebe7e3}
+.promo-image a,.promo-image img{display:block;width:100%;height:100%}
+.promo-image img{object-fit:cover;object-position:center}
+.promo-empty{min-height:460px;display:flex;align-items:center;justify-content:center;color:#c7c0ba;font-size:52px;font-weight:900}
+
+.promo-points{width:min(1160px,calc(100% - 48px));margin:0 auto;padding:4px 0 50px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.promo-point{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px 24px;box-shadow:0 10px 28px rgba(24,34,52,.06)}
+.promo-point b{display:inline-flex;width:34px;height:34px;border-radius:50%;align-items:center;justify-content:center;background:#f1ebff;color:#7040df;font-size:11px;margin-bottom:12px}
+.promo-point small{display:block;color:#8a909a;font-size:12px;margin-bottom:4px}
+.promo-point strong{font-size:19px;color:var(--navy)}
+
+.article-shell{width:min(1040px,calc(100% - 48px));margin:0 auto;padding:46px 0 110px}
+.breadcrumb{font-size:13px;color:var(--muted);margin-bottom:38px}
+.article-head{max-width:900px;margin:0 auto 46px;text-align:center}
+.eyebrow{font-size:12px;letter-spacing:1.7px;font-weight:900;color:var(--orange);margin-bottom:14px}
+.article-head h2{font-size:clamp(38px,4.5vw,58px);line-height:1.16;letter-spacing:-2px;margin:0 0 18px;word-break:keep-all}
+.lead{max-width:760px;margin:0 auto 18px;font-size:18px;line-height:1.75;color:var(--muted)}
+.meta{display:flex;justify-content:center;gap:14px;font-size:13px;color:#8b93a0}
+
+.cover{width:100%;max-width:980px;margin:0 auto 48px}
+.cover img{display:block;width:100%;height:auto;border-radius:22px}
+
+.content-wrap{max-width:860px;margin:0 auto;border-top:1px solid var(--line);padding-top:42px}
+.article-body{font-size:17px;line-height:1.95;letter-spacing:-.1px;word-break:keep-all}
+.article-body p{margin:0 0 24px}
+.article-body img{display:block;width:100%;max-width:860px;height:auto;margin:34px auto;border-radius:16px;object-fit:contain}
+.article-body h2{font-size:30px;line-height:1.35;letter-spacing:-.8px;margin:58px 0 16px}
+.article-body h3{font-size:22px;line-height:1.4;margin:34px 0 12px}
+.article-body a{color:#3152a3;text-decoration:underline;text-underline-offset:3px}
+.disclaimer{margin-top:56px;padding:18px 20px;border-radius:14px;background:#f7f8fb;color:var(--muted);font-size:13px;line-height:1.7}
+
+.related{max-width:900px;margin:86px auto 0;padding-top:42px;border-top:1px solid var(--line)}
+.related h3{font-size:28px;margin:6px 0 20px}
+.related-list{border-top:1px solid #202938}
+.related-list a{display:flex;justify-content:space-between;gap:20px;padding:20px 0;border-bottom:1px solid var(--line)}
+.related-list span{font-size:12px;color:var(--muted);white-space:nowrap}
+
+.admin{max-width:900px;margin:36px auto 0;text-align:right}
+.delete{font-size:12px;color:#9aa1ad}
+
+.float{position:fixed;right:18px;bottom:22px;z-index:90;display:flex;flex-direction:column;gap:10px}
+.float a{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;box-shadow:0 10px 28px rgba(0,0,0,.18)}
+.float .consult{background:#ffe500;color:#111}.float .phone{background:#222;color:#fff}.float .booking{background:var(--orange);color:#fff}
+
+@media(max-width:900px){
+  .detail-nav{display:none}
+  .promo-main{width:min(100% - 32px,760px);grid-template-columns:1fr;gap:24px;padding:40px 0 24px}
+  .promo h1{font-size:42px;letter-spacing:-1.8px}
+  .promo-image,.promo-empty{min-height:340px}
+  .promo-points{width:min(100% - 32px,760px);grid-template-columns:1fr;padding-bottom:34px}
+  .article-shell{width:min(100% - 32px,760px);padding-top:30px}
+  .article-head h2{font-size:38px}
+  .lead{font-size:16px}
+  .article-body{font-size:16px;line-height:1.9}
+  .float a{width:54px;height:54px}
+}
+</style>
+</head>
+<body>
+
+<header class="detail-header">
+  <a class="detail-logo" href="{{ '/blog/insight/' | relative_url }}">
+    <strong>병원정보 칼럼</strong>
+    <span>피부·시술 정보 아카이브</span>
+  </a>
+  <nav class="detail-nav">
+    <a href="{{ '/blog/insight/' | relative_url }}">전체 칼럼</a>
+    <a href="{{ '/blog/insight/#lifting' | relative_url }}">리프팅</a>
+    <a href="{{ '/blog/insight/#skinbooster' | relative_url }}">스킨부스터</a>
+    <a class="write" href="{{ '/write/' | relative_url }}">글 작성</a>
+  </nav>
+</header>
+
+<section class="promo">
+  <div class="promo-main">
+    <div class="promo-copy">
       <p class="promo-kicker">id clinic · {{ page.category }}</p>
-      <h2>{{ page.promo_title | default: page.title }}</h2>
+      <h1>{{ page.promo_title | default: page.title }}</h1>
       <p class="promo-desc">아이디의원 시술 가격과 상담 정보를 확인해보세요. 시술 종류와 구성에 따라 실제 가격은 달라질 수 있습니다.</p>
-      {% if page.promo_price %}
-      <div class="promo-price">{{ page.promo_price }}</div>
-      {% endif %}
+      {% if page.promo_price %}<div class="promo-price">{{ page.promo_price }}</div>{% endif %}
       <div class="promo-actions">
         <a class="promo-btn primary" href="{{ page.promo_link | default: 'https://www.idclinic.co.kr/' }}" target="_blank" rel="noopener">가격 확인하기</a>
-        {% if page.booking_link %}
-        <a class="promo-btn ghost" href="{{ page.booking_link }}" target="_blank" rel="noopener">예약하기</a>
-        {% else %}
-        <a class="promo-btn ghost" href="https://www.idclinic.co.kr/" target="_blank" rel="noopener">아이디의원 바로가기</a>
-        {% endif %}
+        <a class="promo-btn secondary" href="{{ page.booking_link | default: 'https://www.idclinic.co.kr/' }}" target="_blank" rel="noopener">예약하기</a>
       </div>
     </div>
-
-    <div class="treatment-promo-visual">
+    <div class="promo-image">
       {% if page.thumbnail %}
-        {% if page.thumbnail_link %}
-        <a href="{{ page.thumbnail_link }}" target="_blank" rel="noopener">
-          <img src="{{ page.thumbnail }}" alt="{{ page.title }}">
-        </a>
-        {% else %}
+        {% if page.thumbnail_link %}<a href="{{ page.thumbnail_link }}" target="_blank" rel="noopener">{% endif %}
         <img src="{{ page.thumbnail }}" alt="{{ page.title }}">
-        {% endif %}
+        {% if page.thumbnail_link %}</a>{% endif %}
       {% else %}
-      <div class="promo-visual-placeholder">id clinic</div>
+        <div class="promo-empty">id clinic</div>
       {% endif %}
     </div>
   </div>
 
-  <div class="treatment-promo-points">
-    <div class="promo-stat">
-      <span>01</span>
-      <small>상담 기준</small>
-      <strong>개인별 맞춤 상담</strong>
-    </div>
-    <div class="promo-stat">
-      <span>02</span>
-      <small>시술 안내</small>
-      <strong>구성·가격 확인</strong>
-    </div>
-    <div class="promo-stat">
-      <span>03</span>
-      <small>방문 안내</small>
-      <strong>지점별 상담 가능</strong>
-    </div>
+  <div class="promo-points">
+    <div class="promo-point"><b>01</b><small>상담 기준</small><strong>개인별 맞춤 상담</strong></div>
+    <div class="promo-point"><b>02</b><small>시술 안내</small><strong>구성·가격 확인</strong></div>
+    <div class="promo-point"><b>03</b><small>방문 안내</small><strong>지점별 상담 가능</strong></div>
   </div>
 </section>
 
-<div class="floating-contact">
-  <a href="{{ page.consult_link | default: page.promo_link | default: 'https://www.idclinic.co.kr/' }}" target="_blank" rel="noopener" class="floating-contact-btn consult" aria-label="상담하기">
-    <span>상담</span>
-  </a>
-  {% if page.phone %}
-  <a href="tel:{{ page.phone | replace: '-', '' | replace: ' ', '' }}" class="floating-contact-btn phone" aria-label="전화하기">
-    <span>전화</span>
-  </a>
+<main class="article-shell">
+  <div class="breadcrumb"><a href="{{ '/blog/insight/' | relative_url }}">인사이트</a> / {{ page.category }}</div>
+
+  <header class="article-head">
+    <div class="eyebrow">MEDICAL INFORMATION COLUMN</div>
+    <h2>{{ page.title }}</h2>
+    {% if page.description %}<p class="lead">{{ page.description }}</p>{% endif %}
+    <div class="meta"><span>{{ page.category }}</span><time>{{ page.date | date: "%Y-%m-%d" }}</time></div>
+  </header>
+
+  {% if page.thumbnail %}
+  <figure class="cover">
+    {% if page.thumbnail_link %}<a href="{{ page.thumbnail_link }}" target="_blank" rel="noopener">{% endif %}
+    <img src="{{ page.thumbnail }}" alt="{{ page.title }}">
+    {% if page.thumbnail_link %}</a>{% endif %}
+  </figure>
   {% endif %}
-  <a href="{{ page.booking_link | default: 'https://www.idclinic.co.kr/' }}" target="_blank" rel="noopener" class="floating-contact-btn booking" aria-label="예약하기">
-    <span>예약</span>
-  </a>
-</div>
 
-<main class="insight-detail">
-  <div class="insight-breadcrumb"><a href="{{ '/blog/insight/' | relative_url }}">인사이트</a> / {{ page.category }}</div>
-
-  <article>
-    <header class="insight-title">
-      <p class="eyebrow">FINE BEAUTY INSIGHT</p>
-      <h1>{{ page.title }}</h1>
-      {% if page.description %}<p class="insight-lead">{{ page.description }}</p>{% endif %}
-      <div class="insight-meta"><span>인사이트 · {{ page.category }}</span><time>{{ page.date | date: "%Y-%m-%d" }}</time></div>
-    </header>
-
-    {% if page.thumbnail %}
-    <figure class="insight-cover">
-      {% if page.thumbnail_link %}
-      <a href="{{ page.thumbnail_link }}" target="_blank" rel="noopener">
-        <img src="{{ page.thumbnail }}" alt="{{ page.title }}">
-      </a>
-      {% else %}
-      <img src="{{ page.thumbnail }}" alt="{{ page.title }}">
-      {% endif %}
-    </figure>
-    {% endif %}
-
-    <div class="insight-content-grid">
-      <aside class="insight-toc">
-        <strong>목차</strong>
-        <nav id="toc"></nav>
-      </aside>
-
-      <div class="article-body" id="articleBody">
-        {{ content }}
-        <p class="disclaimer">※ 본 콘텐츠는 일반적인 의료정보 제공을 위한 자료이며, 개인의 피부 상태 및 시술 적합성은 의료진 상담을 통해 확인해야 합니다.</p>
-      </div>
+  <div class="content-wrap">
+    <div class="article-body">
+      {{ content }}
+      <p class="disclaimer">※ 본 콘텐츠는 일반적인 의료정보 제공을 위한 자료이며, 개인의 피부 상태 및 시술 적합성은 의료진 상담을 통해 확인해야 합니다.</p>
     </div>
-  </article>
-
-
-  <div class="insight-admin-actions">
-    <a
-      class="delete-post-btn"
-      href="https://github.com/hwsr6028-source/hwsr6028-source.github.io/issues/new?title=%5B%EC%82%AD%EC%A0%9C%5D%20{{ page.title | url_encode }}&body=%EC%82%AD%EC%A0%9C%ED%95%A0%20%EA%B8%80%EC%9E%85%EB%8B%88%EB%8B%A4.%0A%0A%ED%8C%8C%EC%9D%BC%EA%B2%BD%EB%A1%9C%3A%20{{ page.path | url_encode }}%0A%EA%B8%80%EC%A0%9C%EB%AA%A9%3A%20{{ page.title | url_encode }}"
-      target="_blank"
-      rel="noopener"
-    >이 글 삭제</a>
   </div>
 
-  <section class="related insight-related">
-    <p class="eyebrow">RELATED INSIGHT</p>
-    <h2>함께 읽으면 좋은 인사이트</h2>
+  <div class="admin">
+    <a class="delete" href="https://github.com/hwsr6028-source/hwsr6028-source.github.io/issues/new?title=%5B%EC%82%AD%EC%A0%9C%5D%20{{ page.title | url_encode }}&body=%EC%82%AD%EC%A0%9C%ED%95%A0%20%EA%B8%80%EC%9E%85%EB%8B%88%EB%8B%A4.%0A%0A%ED%8C%8C%EC%9D%BC%EA%B2%BD%EB%A1%9C%3A%20{{ page.path | url_encode }}%0A%EA%B8%80%EC%A0%9C%EB%AA%A9%3A%20{{ page.title | url_encode }}" target="_blank" rel="noopener">이 글 삭제</a>
+  </div>
+
+  <section class="related">
+    <div class="eyebrow">RELATED INSIGHT</div>
+    <h3>함께 읽으면 좋은 인사이트</h3>
     <div class="related-list">
       {% assign related_count = 0 %}
       {% for post in site.posts %}
@@ -126,23 +182,11 @@
   </section>
 </main>
 
-<script>
-document.addEventListener('DOMContentLoaded', function(){
-  const body=document.getElementById('articleBody');
-  const toc=document.getElementById('toc');
-  if(!body||!toc)return;
-  const hs=[...body.querySelectorAll('h2')];
-  hs.forEach((h,i)=>{
-    h.id='section-'+(i+1);
-    const a=document.createElement('a');
-    a.href='#'+h.id;
-    a.textContent=(i+1)+'. '+h.textContent;
-    toc.appendChild(a);
-  });
-  if(!hs.length && toc.parentElement) {
-    toc.parentElement.style.display='none';
-    const grid = document.querySelector('.insight-content-grid');
-    if(grid) grid.classList.add('no-toc');
-  }
-});
-</script>
+<div class="float">
+  <a class="consult" href="{{ page.consult_link | default: page.promo_link | default: 'https://www.idclinic.co.kr/' }}" target="_blank" rel="noopener">상담</a>
+  {% if page.phone %}<a class="phone" href="tel:{{ page.phone | replace: '-', '' | replace: ' ', '' }}">전화</a>{% endif %}
+  <a class="booking" href="{{ page.booking_link | default: 'https://www.idclinic.co.kr/' }}" target="_blank" rel="noopener">예약</a>
+</div>
+
+</body>
+</html>
