@@ -70,7 +70,9 @@ jobs:
           slug = slug[:120].strip("-")
 
           now=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
-          today=now.strftime("%Y-%m-%d")
+          # Jekyll이 방금 생성된 글을 미래 글로 판단하지 않도록 3분 여유를 둡니다.
+          publish_time = now - datetime.timedelta(minutes=3)
+          today=publish_time.strftime("%Y-%m-%d")
           target=pathlib.Path("_posts")/f"{today}-{slug}.md"
           target.parent.mkdir(exist_ok=True)
 
@@ -84,7 +86,7 @@ jobs:
               f"seo_title: {q(seo_title or title + ' | id clinic')}",
               f"description: {q(description)}",
               f"category: {q(category)}",
-              f"date: {today} 00:00:00 +0900",
+              f"date: {publish_time.strftime('%Y-%m-%d %H:%M:%S')} +0900",
               *([f"thumbnail: {q(thumbnail)}"] if thumbnail else []),
               "---",
               "",
