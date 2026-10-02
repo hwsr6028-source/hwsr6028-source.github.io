@@ -25,6 +25,10 @@ textarea{min-height:140px;resize:vertical;line-height:1.75}
 .file-preview img{display:block;max-width:100%;max-height:280px;object-fit:contain;border-radius:10px}
 .upload-help{font-size:12px;color:var(--muted);line-height:1.5;margin-top:6px}
 .image-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.text-tools{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.inline-image-btn{border:1px solid #d9dee7;background:#fff;border-radius:10px;padding:8px 12px;font-size:12px;font-weight:800;cursor:pointer;color:var(--navy)}
+.inline-image-btn:hover{border-color:var(--navy);background:#f8f9fc}
+.inline-image-hint{font-size:11px;color:var(--muted)}
 .field{margin-bottom:16px}
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;padding:16px 0 8px;border-top:1px solid var(--line);margin-top:18px}
 .toolbtn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 14px;font-weight:700;cursor:pointer}
@@ -103,7 +107,7 @@ textarea{min-height:140px;resize:vertical;line-height:1.75}
 
   <div class="toolbar">
     <button class="toolbtn" type="button" onclick="addBlock('text')">+ 텍스트</button>
-    <button class="toolbtn" type="button" onclick="addBlock('image')">+ 이미지</button>
+    <button class="toolbtn" type="button" onclick="addBlock('image')">+ 이미지 블록</button>
     <button class="toolbtn" type="button" onclick="addBlock('map')">+ 지도</button>
     <button class="toolbtn" type="button" onclick="addBlock('link')">+ 링크</button>
   </div>
@@ -151,11 +155,37 @@ function blockHeader(type,i){
   '<button class="iconbtn" onclick="removeBlock('+i+')">삭제</button></div></div>';
 }
 
+
+function insertImageAtCursor(i){
+  const ta=document.getElementById('textBlock-'+i);
+  const current=blocks[i] && blocks[i].text ? blocks[i].text : '';
+  const pos=ta ? ta.selectionStart : current.length;
+  const before=current.slice(0,pos);
+  const after=current.slice(pos);
+
+  const replacement=[
+    {id:Date.now()+Math.random(),type:'text',text:before},
+    {id:Date.now()+Math.random()+1,type:'image',url:'',link:'',alt:'',preview:''},
+    {id:Date.now()+Math.random()+2,type:'text',text:after}
+  ];
+
+  blocks.splice(i,1,...replacement);
+  renderBlocks();
+  renderPreview();
+
+  setTimeout(()=>{
+    const imgInput=document.querySelector('#blocks .block:nth-child('+(i+2)+') input[type="file"]');
+    if(imgInput) imgInput.click();
+  },50);
+}
+
 function renderBlocks(){
   const el=document.getElementById('blocks');
   el.innerHTML=blocks.map((b,i)=>{
     if(b.type==='text') return '<div class="block">'+blockHeader(b.type,i)+
-      '<label>본문</label><textarea oninput="updateBlock('+i+',\'text\',this.value)" placeholder="여기에 본문을 길게 작성하세요.\n\n문단을 나누려면 한 줄 비워주세요.">'+esc(b.text||'')+'</textarea></div>';
+      '<div class="text-tools"><div><label style="margin:0">본문</label><div class="inline-image-hint">사진을 넣을 위치에 커서를 두고 사진 넣기를 누르세요.</div></div>'+
+      '<button class="inline-image-btn" type="button" onclick="insertImageAtCursor('+i+')">📷 사진 넣기</button></div>'+
+      '<textarea id="textBlock-'+i+'" oninput="updateBlock('+i+',\'text\',this.value)" placeholder="여기에 본문을 길게 작성하세요.\n\n문단을 나누려면 한 줄 비워주세요.">'+esc(b.text||'')+'</textarea></div>';
 
     if(b.type==='image') return '<div class="block">'+blockHeader(b.type,i)+
       '<div class="file-upload"><label>사진 첨부</label><input type="file" accept="image/*" onchange="previewBlockFile('+i+',this.files[0])"><div class="upload-help">선택한 사진은 미리보기용입니다. 발행하려면 이미지 URL도 입력해 주세요.</div><div id="blockPreview-'+i+'" class="file-preview">'+(b.preview?'<img src="'+esc(b.preview)+'">':'')+'</div></div>'+
