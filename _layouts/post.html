@@ -69,6 +69,10 @@ document.addEventListener('DOMContentLoaded', function(){
     a.textContent=(i+1)+'. '+h.textContent;
     toc.appendChild(a);
   });
-  if(!hs.length && toc.parentElement) toc.parentElement.style.display='none';
+  if(!hs.length && toc.parentElement) {
+    toc.parentElement.style.display='none';
+    const grid = document.querySelector('.insight-content-grid');
+    if(grid) grid.classList.add('no-toc');
+  }
 });
 </script>
