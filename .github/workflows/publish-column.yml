@@ -40,11 +40,20 @@ jobs:
               return "" if v == "_No response_" else v
 
           title = section("글 제목") or section("제목")
-          seo_title = section("검색 노출 제목") or section("SEO 제목")
+          seo_title = section("검색 노출 제목") or section("SEO 제목") or title
           description = section("검색 노출 설명") or section("검색 설명")
           category = section("카테고리")
           thumbnail_md = section("대표 이미지")
+          thumbnail_link = section("대표 이미지 클릭 링크")
           content = section("본문")
+
+          if not description and content:
+              plain = re.sub(r'<[^>]+>', ' ', content)
+              plain = re.sub(r'!\\[[^\\]]*\\]\\([^)]*\\)', ' ', plain)
+              plain = re.sub(r'https?://\\S+', ' ', plain)
+              plain = re.sub(r'[#*_>~-]+', ' ', plain)
+              plain = re.sub(r'\\s+', ' ', plain).strip()
+              description = plain[:140] if plain else title
 
           thumbnail = ""
           if thumbnail_md:
@@ -56,7 +65,7 @@ jobs:
               if m:
                   thumbnail = m.group(1).strip()
 
-          if not title or not description or not category or not content:
+          if not title or not category or not content:
               raise SystemExit("필수 입력값을 찾지 못했습니다.")
 
           # 제목을 그대로 활용한 한글 URL 슬러그
@@ -88,6 +97,7 @@ jobs:
               f"category: {q(category)}",
               f"date: {publish_time.strftime('%Y-%m-%d %H:%M:%S')} +0900",
               *([f"thumbnail: {q(thumbnail)}"] if thumbnail else []),
+              *([f"thumbnail_link: {q(thumbnail_link)}"] if thumbnail_link else []),
               "---",
               "",
               content,
