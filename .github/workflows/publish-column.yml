@@ -45,6 +45,12 @@ jobs:
           category = section("카테고리")
           thumbnail_md = section("대표 이미지")
           thumbnail_link = section("대표 이미지 클릭 링크")
+          promo_title = section("상단 프로모션 제목")
+          promo_price = section("상단 프로모션 가격")
+          promo_link = section("가격/상담 버튼 링크")
+          consult_link = section("상담 링크")
+          phone = section("전화번호")
+          booking_link = section("예약 링크")
           content = section("본문")
 
           if not description and content:
@@ -98,6 +104,12 @@ jobs:
               f"date: {publish_time.strftime('%Y-%m-%d %H:%M:%S')} +0900",
               *([f"thumbnail: {q(thumbnail)}"] if thumbnail else []),
               *([f"thumbnail_link: {q(thumbnail_link)}"] if thumbnail_link else []),
+              *([f"promo_title: {q(promo_title)}"] if promo_title else []),
+              *([f"promo_price: {q(promo_price)}"] if promo_price else []),
+              *([f"promo_link: {q(promo_link)}"] if promo_link else []),
+              *([f"consult_link: {q(consult_link)}"] if consult_link else []),
+              *([f"phone: {q(phone)}"] if phone else []),
+              *([f"booking_link: {q(booking_link)}"] if booking_link else []),
               "---",
               "",
               content,
