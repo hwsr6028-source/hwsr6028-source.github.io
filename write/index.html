@@ -6,204 +6,49 @@
 <meta name="robots" content="noindex,nofollow">
 <title>병원정보 칼럼 글쓰기</title>
 <style>
-:root{
-  --navy:#203568;
-  --orange:#FF6B2C;
-  --ink:#172033;
-  --muted:#6f7785;
-  --line:#e6e9ef;
-  --soft:#f6f8fb;
-}
+:root{--navy:#203568;--orange:#FF6B2C;--ink:#172033;--muted:#6f7785;--line:#e6e9ef;--soft:#f6f8fb}
 *{box-sizing:border-box}
-body{
-  margin:0;
-  background:var(--soft);
-  font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  color:var(--ink);
-}
+body{margin:0;background:var(--soft);font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
 button,input,textarea,select{font:inherit}
-.topbar{
-  position:sticky;top:0;z-index:20;
-  background:rgba(255,255,255,.96);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line);
-  display:flex;justify-content:space-between;align-items:center;
-  padding:16px 28px;
-}
-.brand{font-weight:900;font-size:20px;color:var(--navy);line-height:1.1}
-.brand small{display:block;font-size:11px;color:var(--muted);margin-top:4px;font-weight:700}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;padding:16px 28px}
+.brand{font-weight:900;font-size:20px;color:var(--navy);line-height:1.1}.brand small{display:block;font-size:11px;color:var(--muted);margin-top:4px}
 .toplink{font-size:13px;color:var(--navy);font-weight:800;text-decoration:none}
-
-.wrap{
-  max-width:1280px;
-  margin:0 auto;
-  padding:28px;
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 420px;
-  gap:24px;
-}
-.panel{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:26px;
-  box-shadow:0 8px 24px rgba(23,32,51,.04);
-}
-h1{margin:0 0 8px;font-size:28px;letter-spacing:-.8px}
-.desc{margin:0 0 24px;color:var(--muted);font-size:14px;line-height:1.7}
-.field{margin-bottom:16px}
+.wrap{max-width:1280px;margin:0 auto;padding:28px;display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:24px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:0 8px 24px rgba(23,32,51,.04)}
+h1{margin:0 0 8px;font-size:28px}.desc{margin:0 0 24px;color:var(--muted);font-size:14px;line-height:1.7}
+.field{margin-bottom:16px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 label{display:block;margin-bottom:7px;font-size:13px;font-weight:800}
-input,textarea,select{
-  width:100%;
-  border:1px solid #d9dee7;
-  border-radius:12px;
-  padding:12px 13px;
-  background:#fff;
-  color:var(--ink);
-}
-input:focus,textarea:focus,select:focus{
-  outline:none;
-  border-color:var(--navy);
-  box-shadow:0 0 0 3px rgba(32,53,104,.08);
-}
-textarea{resize:vertical;line-height:1.75}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-
-.toolbar{
-  display:flex;gap:8px;flex-wrap:wrap;
-  padding:18px 0 8px;
-  border-top:1px solid var(--line);
-  margin-top:20px;
-}
-.toolbtn{
-  border:1px solid var(--line);
-  background:#fff;
-  border-radius:999px;
-  padding:10px 14px;
-  font-weight:800;
-  cursor:pointer;
-}
-.toolbtn:hover{border-color:var(--navy);background:#f8f9fc}
-
-.blocks{display:flex;flex-direction:column;gap:14px;margin-top:12px}
-.block{
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:14px;
-  background:#fff;
-}
-.block-head{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:12px;
-}
-.block-type{font-size:12px;font-weight:900;color:var(--orange)}
-.block-actions{display:flex;gap:6px}
-.iconbtn{
-  border:1px solid var(--line);
-  background:#fff;
-  border-radius:8px;
-  padding:6px 9px;
-  cursor:pointer;
-  font-size:12px;
-}
-.text-tools{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:12px;
-  margin-bottom:10px;
-}
-.text-tools label{margin:0}
-.inline-hint{font-size:11px;color:var(--muted);margin-top:4px}
-.inline-image-btn{
-  border:1px solid #d9dee7;
-  background:#fff;
-  border-radius:10px;
-  padding:9px 12px;
-  font-size:12px;
-  font-weight:900;
-  color:var(--navy);
-  cursor:pointer;
-  white-space:nowrap;
-}
-.inline-image-btn:hover{background:#f7f8fb;border-color:var(--navy)}
-.body-textarea{min-height:460px}
-
-.file-upload{
-  border:1px dashed #cfd5df;
-  border-radius:12px;
-  padding:14px;
-  background:#fafbfc;
-  margin-bottom:12px;
-}
-.file-preview{margin-top:12px}
-.file-preview img{
-  display:block;
-  max-width:100%;
-  max-height:320px;
-  object-fit:contain;
-  border-radius:10px;
-}
-.upload-help{font-size:12px;color:var(--muted);line-height:1.5;margin-top:6px}
-
-.preview{
-  position:sticky;
-  top:88px;
-  max-height:calc(100vh - 116px);
-  overflow:auto;
-}
+input,textarea,select{width:100%;border:1px solid #d9dee7;border-radius:12px;padding:12px 13px;background:#fff;color:var(--ink)}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(32,53,104,.08)}
+.editor-shell{border:1px solid #d9dee7;border-radius:16px;overflow:hidden;background:#fff}
+.editor-toolbar{display:flex;gap:8px;flex-wrap:wrap;padding:10px 12px;border-bottom:1px solid var(--line);background:#fafbfc;position:sticky;top:72px;z-index:5}
+.editor-btn{border:1px solid #d9dee7;background:#fff;border-radius:9px;padding:8px 11px;font-size:12px;font-weight:800;cursor:pointer}
+.editor-btn:hover{border-color:var(--navy);background:#f7f8fb}
+.editor{min-height:650px;padding:24px;font-size:16px;line-height:1.85;outline:none;word-break:keep-all}
+.editor:empty:before{content:"여기에 본문을 작성하세요.\A\A원하는 위치에서 사진을 붙여넣거나 드래그하세요.";white-space:pre;color:#9aa1ad}
+.editor p{margin:0 0 20px}
+.editor img{display:block;max-width:100%;height:auto;margin:18px auto;border-radius:12px}
+.editor-image{position:relative;margin:24px 0;padding:12px;border:1px dashed #cfd5df;border-radius:14px;background:#fafbfc}
+.editor-image img{margin:0 auto 10px}
+.editor-image-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.editor-image-meta input{font-size:12px;padding:9px 10px}
+.map-card,.link-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fafbfc;margin:22px 0}
+.preview{position:sticky;top:88px;max-height:calc(100vh - 116px);overflow:auto}
 .preview h2{font-size:18px;margin:0 0 14px}
-.preview-card{
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:#fff;
-  padding:22px;
-}
+.preview-card{border:1px solid var(--line);border-radius:14px;background:#fff;padding:22px}
 .preview-card h1{font-size:28px;line-height:1.3;margin:0 0 10px}
 .preview-card .meta{font-size:12px;color:var(--muted);margin-bottom:18px}
 .preview-card p{font-size:15px;line-height:1.8;margin:0 0 18px}
 .preview-card img{display:block;width:100%;height:auto;border-radius:12px;margin:18px 0}
-.mapcard,.linkcard{
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:14px;
-  margin:16px 0;
-  background:#fafbfc;
-}
-.mapcard b,.linkcard b{display:block;margin-bottom:6px}
-.mapcard a,.linkcard a{color:var(--orange);font-weight:800}
-
-.footer-actions{
-  display:flex;
-  justify-content:flex-end;
-  gap:10px;
-  margin-top:20px;
-}
-.primary{
-  border:none;
-  border-radius:12px;
-  padding:14px 20px;
-  background:var(--orange);
-  color:#fff;
-  font-weight:900;
-  cursor:pointer;
-}
+.footer-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+.primary{border:none;border-radius:12px;padding:14px 20px;background:var(--orange);color:#fff;font-weight:900;cursor:pointer}
 .note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:12px}
-
-@media(max-width:980px){
-  .wrap{grid-template-columns:1fr}
-  .preview{position:static;max-height:none}
-}
-@media(max-width:640px){
-  .wrap{padding:14px}
-  .panel{padding:18px}
-  .grid2{grid-template-columns:1fr}
-  .body-textarea{min-height:380px}
-}
+.hidden-file{display:none}
+@media(max-width:980px){.wrap{grid-template-columns:1fr}.preview{position:static;max-height:none}}
+@media(max-width:640px){.wrap{padding:14px}.panel{padding:18px}.grid2{grid-template-columns:1fr}.editor{min-height:520px}.editor-image-meta{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
 <header class="topbar">
   <div class="brand">병원정보 칼럼<small>블로그형 글쓰기</small></div>
   <a class="toplink" href="/blog/insight/">칼럼 목록 보기</a>
@@ -212,7 +57,7 @@ textarea{resize:vertical;line-height:1.75}
 <main class="wrap">
 <section class="panel">
   <h1>새 글 작성</h1>
-  <p class="desc">본문을 작성하다가 원하는 위치에 사진을 바로 끼워 넣을 수 있습니다.</p>
+  <p class="desc">본문 한 영역 안에서 글, 사진, 링크, 지도를 원하는 순서대로 넣을 수 있습니다.</p>
 
   <div class="field">
     <label>글 제목</label>
@@ -227,14 +72,8 @@ textarea{resize:vertical;line-height:1.75}
     <div class="field">
       <label>카테고리</label>
       <select id="category">
-        <option>리프팅</option>
-        <option>스킨부스터</option>
-        <option>색소</option>
-        <option>여드름</option>
-        <option>톡신/필러</option>
-        <option>제모</option>
-        <option>바디</option>
-        <option>피부관리</option>
+        <option>리프팅</option><option>스킨부스터</option><option>색소</option><option>여드름</option>
+        <option>톡신/필러</option><option>제모</option><option>바디</option><option>피부관리</option>
       </select>
     </div>
   </div>
@@ -244,19 +83,24 @@ textarea{resize:vertical;line-height:1.75}
     <textarea id="description" rows="4" placeholder="검색결과와 목록에 표시할 1~3문장 요약"></textarea>
   </div>
 
-  <div class="toolbar">
-    <button class="toolbtn" type="button" onclick="addBlock('text')">+ 텍스트</button>
-    <button class="toolbtn" type="button" onclick="addBlock('image')">📷 사진 넣기</button>
-    <button class="toolbtn" type="button" onclick="addBlock('map')">+ 지도</button>
-    <button class="toolbtn" type="button" onclick="addBlock('link')">+ 링크</button>
+  <div class="field">
+    <label>본문</label>
+    <div class="editor-shell">
+      <div class="editor-toolbar">
+        <button class="editor-btn" type="button" onclick="document.getElementById('imageFile').click()">📷 사진</button>
+        <button class="editor-btn" type="button" onclick="insertLink()">🔗 링크</button>
+        <button class="editor-btn" type="button" onclick="insertMap()">📍 지도</button>
+        <button class="editor-btn" type="button" onclick="document.execCommand('bold')"><b>B</b> 굵게</button>
+      </div>
+      <div id="editor" class="editor" contenteditable="true"></div>
+      <input id="imageFile" class="hidden-file" type="file" accept="image/*" multiple>
+    </div>
   </div>
-
-  <div id="blocks" class="blocks"></div>
 
   <div class="footer-actions">
     <button class="primary" type="button" onclick="publish()">발행 준비하기</button>
   </div>
-  <p class="note">본문 첫 번째 이미지는 자동으로 대표 이미지로 사용됩니다. 발행 준비하기를 누르면 발행용 내용이 복사되고 GitHub 발행 화면이 열립니다.</p>
+  <p class="note">본문 첫 번째 이미지가 자동으로 대표 이미지로 사용됩니다. 로컬 파일로 붙인 이미지는 미리보기는 가능하지만 실제 발행용 URL이 필요합니다.</p>
 </section>
 
 <aside class="panel preview">
@@ -266,224 +110,202 @@ textarea{resize:vertical;line-height:1.75}
 </main>
 
 <script>
-let blocks=[];
+const editor=document.getElementById('editor');
+let savedRange=null;
 
-function esc(s=''){
-  return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+
+function saveRange(){
+  const sel=window.getSelection();
+  if(sel&&sel.rangeCount&&editor.contains(sel.anchorNode)) savedRange=sel.getRangeAt(0).cloneRange();
 }
+['keyup','mouseup','input'].forEach(ev=>editor.addEventListener(ev,()=>{saveRange();renderPreview()}));
 
-function addBlock(type,data={}){
-  blocks.push({id:Date.now()+Math.random(),type,...data});
-  renderBlocks();
+function insertNodeAtCursor(node){
+  editor.focus();
+  const sel=window.getSelection();
+  if(savedRange){
+    sel.removeAllRanges(); sel.addRange(savedRange);
+  }
+  if(!sel.rangeCount){editor.appendChild(node);return}
+  const range=sel.getRangeAt(0);
+  range.deleteContents();
+  range.insertNode(node);
+  const p=document.createElement('p'); p.innerHTML='<br>';
+  node.after(p);
+  range.setStart(p,0); range.collapse(true);
+  sel.removeAllRanges(); sel.addRange(range);
+  savedRange=range.cloneRange();
   renderPreview();
 }
 
-function removeBlock(i){
-  blocks.splice(i,1);
-  renderBlocks();
-  renderPreview();
-}
-
-function moveBlock(i,d){
-  const j=i+d;
-  if(j<0||j>=blocks.length)return;
-  [blocks[i],blocks[j]]=[blocks[j],blocks[i]];
-  renderBlocks();
-  renderPreview();
-}
-
-function updateBlock(i,key,val){
-  blocks[i][key]=val;
-  renderPreview();
-}
-
-function blockHeader(type,i){
-  const names={text:'텍스트',image:'이미지',map:'지도',link:'링크'};
-  return '<div class="block-head">'+
-    '<span class="block-type">'+names[type]+'</span>'+
-    '<div class="block-actions">'+
-      '<button class="iconbtn" type="button" onclick="moveBlock('+i+',-1)">↑</button>'+
-      '<button class="iconbtn" type="button" onclick="moveBlock('+i+',1)">↓</button>'+
-      '<button class="iconbtn" type="button" onclick="removeBlock('+i+')">삭제</button>'+
-    '</div>'+
-  '</div>';
-}
-
-function insertImageAtCursor(i){
-  const ta=document.getElementById('textBlock-'+i);
-  const current=blocks[i]?.text||'';
-  const pos=ta?ta.selectionStart:current.length;
-  const before=current.slice(0,pos);
-  const after=current.slice(pos);
-
-  blocks.splice(
-    i,1,
-    {id:Date.now()+Math.random(),type:'text',text:before},
-    {id:Date.now()+Math.random()+1,type:'image',url:'',link:'',alt:'',preview:''},
-    {id:Date.now()+Math.random()+2,type:'text',text:after}
-  );
-
-  renderBlocks();
-  renderPreview();
-
-  setTimeout(()=>{
-    const input=document.querySelectorAll('.block input[type="file"]')[0];
-    const imageBlocks=[...document.querySelectorAll('.block')];
-    const target=imageBlocks[i+1]?.querySelector('input[type="file"]');
-    if(target) target.click();
-  },80);
-}
-
-function previewBlockFile(i,file){
-  if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    blocks[i].preview=e.target.result;
-    renderBlocks();
-    renderPreview();
-  };
-  reader.readAsDataURL(file);
-}
-
-function renderBlocks(){
-  const el=document.getElementById('blocks');
-  el.innerHTML=blocks.map((b,i)=>{
-    if(b.type==='text'){
-      return '<div class="block">'+blockHeader(b.type,i)+
-        '<div class="text-tools">'+
-          '<div><label>본문</label><div class="inline-hint">사진을 넣을 위치에 커서를 두고 사진 넣기를 누르세요.</div></div>'+
-          '<button class="inline-image-btn" type="button" onclick="insertImageAtCursor('+i+')">📷 사진 넣기</button>'+
-        '</div>'+
-        '<textarea class="body-textarea" id="textBlock-'+i+'" oninput="updateBlock('+i+',\'text\',this.value)" placeholder="여기에 본문을 길게 작성하세요.\n\n문단을 나누려면 한 줄 비워주세요.">'+esc(b.text||'')+'</textarea>'+
-      '</div>';
-    }
-
-    if(b.type==='image'){
-      return '<div class="block">'+blockHeader(b.type,i)+
-        '<div class="file-upload">'+
-          '<label>사진</label>'+
-          '<input type="file" accept="image/*" onchange="previewBlockFile('+i+',this.files[0])">'+
-          '<div class="upload-help">파일을 선택하면 미리보기가 표시됩니다. 실제 발행용 이미지는 아래 이미지 URL에 입력해 주세요.</div>'+
-          '<div class="file-preview">'+(b.preview?'<img src="'+esc(b.preview)+'">':'')+'</div>'+
-        '</div>'+
-        '<div class="field"><label>이미지 URL</label><input value="'+esc(b.url||'')+'" oninput="updateBlock('+i+',\'url\',this.value)" placeholder="https://..."></div>'+
-        '<div class="field"><label>이미지 클릭 링크</label><input value="'+esc(b.link||'')+'" oninput="updateBlock('+i+',\'link\',this.value)" placeholder="https://..."></div>'+
-        '<div class="field"><label>이미지 설명(alt)</label><input value="'+esc(b.alt||'')+'" oninput="updateBlock('+i+',\'alt\',this.value)" placeholder="이미지 설명"></div>'+
-      '</div>';
-    }
-
-    if(b.type==='map'){
-      return '<div class="block">'+blockHeader(b.type,i)+
-        '<div class="grid2">'+
-          '<div class="field"><label>장소명</label><input value="'+esc(b.name||'')+'" oninput="updateBlock('+i+',\'name\',this.value)" placeholder="아이디의원 강남점"></div>'+
-          '<div class="field"><label>주소</label><input value="'+esc(b.address||'')+'" oninput="updateBlock('+i+',\'address\',this.value)" placeholder="서울 강남구 ..."></div>'+
-        '</div>'+
-        '<div class="field"><label>지도 링크</label><input value="'+esc(b.mapLink||'')+'" oninput="updateBlock('+i+',\'mapLink\',this.value)" placeholder="네이버지도 또는 카카오맵 링크"></div>'+
-      '</div>';
-    }
-
-    return '<div class="block">'+blockHeader(b.type,i)+
-      '<div class="field"><label>링크 제목</label><input value="'+esc(b.label||'')+'" oninput="updateBlock('+i+',\'label\',this.value)" placeholder="아이디의원 홈페이지 바로가기"></div>'+
-      '<div class="field"><label>URL</label><input value="'+esc(b.url||'')+'" oninput="updateBlock('+i+',\'url\',this.value)" placeholder="https://..."></div>'+
+function makeImageBlock(src){
+  const wrap=document.createElement('div');
+  wrap.className='editor-image';
+  wrap.setAttribute('contenteditable','false');
+  wrap.innerHTML='<img src="'+src+'" alt="">'+
+    '<div class="editor-image-meta">'+
+      '<input class="img-url" placeholder="실제 발행용 이미지 URL (https://...)">'+
+      '<input class="img-link" placeholder="이미지 클릭 링크 (선택)">'+
     '</div>';
-  }).join('');
+  wrap.querySelectorAll('input').forEach(el=>el.addEventListener('input',renderPreview));
+  return wrap;
+}
+
+document.getElementById('imageFile').addEventListener('change',function(){
+  [...this.files].forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=e=>insertNodeAtCursor(makeImageBlock(e.target.result));
+    reader.readAsDataURL(file);
+  });
+  this.value='';
+});
+
+editor.addEventListener('paste',e=>{
+  const items=[...(e.clipboardData?.items||[])];
+  const img=items.find(x=>x.type&&x.type.startsWith('image/'));
+  if(!img)return;
+  e.preventDefault();
+  const file=img.getAsFile();
+  const reader=new FileReader();
+  reader.onload=ev=>insertNodeAtCursor(makeImageBlock(ev.target.result));
+  reader.readAsDataURL(file);
+});
+
+editor.addEventListener('dragover',e=>e.preventDefault());
+editor.addEventListener('drop',e=>{
+  const files=[...(e.dataTransfer?.files||[])].filter(f=>f.type.startsWith('image/'));
+  if(!files.length)return;
+  e.preventDefault();
+  files.forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=ev=>insertNodeAtCursor(makeImageBlock(ev.target.result));
+    reader.readAsDataURL(file);
+  });
+});
+
+function insertLink(){
+  const label=prompt('링크에 표시할 문구를 입력하세요.');
+  if(!label)return;
+  const url=prompt('이동할 URL을 입력하세요.');
+  if(!url)return;
+  const box=document.createElement('div');
+  box.className='link-card';
+  box.setAttribute('contenteditable','false');
+  box.innerHTML='<strong>'+esc(label)+'</strong><br><a href="'+esc(url)+'" target="_blank">'+esc(url)+'</a>';
+  box.dataset.label=label; box.dataset.url=url;
+  insertNodeAtCursor(box);
+}
+
+function insertMap(){
+  const name=prompt('장소명을 입력하세요.');
+  if(!name)return;
+  const address=prompt('주소를 입력하세요.')||'';
+  const mapLink=prompt('네이버지도 또는 카카오맵 링크를 입력하세요.')||'';
+  const box=document.createElement('div');
+  box.className='map-card';
+  box.setAttribute('contenteditable','false');
+  box.innerHTML='<strong>📍 '+esc(name)+'</strong><br>'+esc(address)+(mapLink?'<br><a href="'+esc(mapLink)+'" target="_blank">지도에서 보기 →</a>':'');
+  box.dataset.name=name; box.dataset.address=address; box.dataset.mapLink=mapLink;
+  insertNodeAtCursor(box);
 }
 
 function renderPreview(){
   const title=document.getElementById('title').value||'글 제목 미리보기';
   const cat=document.getElementById('category').value;
   const desc=document.getElementById('description').value;
+  const clone=editor.cloneNode(true);
 
-  let html='<h1>'+esc(title)+'</h1><div class="meta">'+esc(cat)+'</div>';
-  if(desc)html+='<p>'+esc(desc)+'</p>';
-
-  blocks.forEach(b=>{
-    if(b.type==='text'&&b.text){
-      html+=b.text.split(/\n\n+/).map(p=>'<p>'+esc(p).replace(/\n/g,'<br>')+'</p>').join('');
-    }
-    if(b.type==='image'){
-      const src=b.url||b.preview;
-      if(src){
-        const img='<img src="'+esc(src)+'" alt="'+esc(b.alt||'')+'">';
-        html+=b.link?'<a href="'+esc(b.link)+'" target="_blank">'+img+'</a>':img;
-      }
-    }
-    if(b.type==='map'&&(b.name||b.address)){
-      html+='<div class="mapcard"><b>📍 '+esc(b.name||'지도')+'</b><div>'+esc(b.address||'')+'</div>'+
-        (b.mapLink?'<a href="'+esc(b.mapLink)+'" target="_blank">지도에서 보기 →</a>':'')+
-      '</div>';
-    }
-    if(b.type==='link'&&b.url){
-      html+='<div class="linkcard"><b>'+esc(b.label||'링크')+'</b><a href="'+esc(b.url)+'" target="_blank">바로가기 →</a></div>';
-    }
+  clone.querySelectorAll('.editor-image').forEach(el=>{
+    const img=el.querySelector('img');
+    const url=el.querySelector('.img-url')?.value||img?.src||'';
+    const link=el.querySelector('.img-link')?.value||'';
+    const replacement=document.createElement('div');
+    replacement.innerHTML=link?'<a href="'+esc(link)+'" target="_blank"><img src="'+esc(url)+'"></a>':'<img src="'+esc(url)+'">';
+    el.replaceWith(replacement);
   });
+  clone.querySelectorAll('.editor-image-meta').forEach(x=>x.remove());
 
-  document.getElementById('preview').innerHTML=html;
+  document.getElementById('preview').innerHTML=
+    '<h1>'+esc(title)+'</h1><div class="meta">'+esc(cat)+'</div>'+
+    (desc?'<p>'+esc(desc)+'</p>':'')+clone.innerHTML;
 }
 
 ['title','seoTitle','category','description'].forEach(id=>{
-  document.addEventListener('input',e=>{if(e.target.id===id)renderPreview()});
-  document.addEventListener('change',e=>{if(e.target.id===id)renderPreview()});
+  document.getElementById(id).addEventListener('input',renderPreview);
+  document.getElementById(id).addEventListener('change',renderPreview);
 });
 
-function buildBody(){
+function editorToPublishHtml(){
+  const clone=editor.cloneNode(true);
+
+  clone.querySelectorAll('.editor-image').forEach(el=>{
+    const img=el.querySelector('img');
+    const url=el.querySelector('.img-url')?.value.trim()||'';
+    const link=el.querySelector('.img-link')?.value.trim()||'';
+    if(!url){
+      el.replaceWith(document.createTextNode('[이미지 URL 필요]'));
+      return;
+    }
+    const out=document.createElement('div');
+    out.innerHTML=link
+      ? '<a href="'+esc(link)+'" target="_blank" rel="noopener"><img src="'+esc(url)+'" alt=""></a>'
+      : '<img src="'+esc(url)+'" alt="">';
+    el.replaceWith(out);
+  });
+
+  clone.querySelectorAll('.link-card').forEach(el=>{
+    const label=el.dataset.label||'링크';
+    const url=el.dataset.url||'#';
+    const out=document.createElement('p');
+    out.innerHTML='<a href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(label)+'</a>';
+    el.replaceWith(out);
+  });
+
+  clone.querySelectorAll('.map-card').forEach(el=>{
+    const name=el.dataset.name||'지도';
+    const address=el.dataset.address||'';
+    const mapLink=el.dataset.mapLink||'';
+    const out=document.createElement('div');
+    out.className='mapcard';
+    out.innerHTML='<strong>📍 '+esc(name)+'</strong><br>'+esc(address)+(mapLink?'<br><a href="'+esc(mapLink)+'" target="_blank" rel="noopener">지도에서 보기 →</a>':'');
+    el.replaceWith(out);
+  });
+
+  return clone.innerHTML;
+}
+
+function firstImageUrl(){
+  const first=editor.querySelector('.editor-image .img-url');
+  return first?first.value.trim():'';
+}
+
+async function publish(){
   const title=document.getElementById('title').value.trim();
   const seo=document.getElementById('seoTitle').value.trim();
   const desc=document.getElementById('description').value.trim();
   const cat=document.getElementById('category').value;
+  if(!title||!desc){alert('글 제목과 검색 노출 설명은 필수입니다.');return}
 
-  if(!title||!desc){
-    alert('글 제목과 검색 노출 설명은 필수입니다.');
-    return null;
+  const missing=[...editor.querySelectorAll('.editor-image')].filter(el=>!el.querySelector('.img-url')?.value.trim());
+  if(missing.length){
+    alert('본문 이미지 '+missing.length+'개에 실제 발행용 이미지 URL이 없습니다.');
+    return;
   }
 
+  const thumb=firstImageUrl();
   let body='### 글 제목\n\n'+title+'\n\n';
   body+='### 검색 노출 제목\n\n'+(seo||title)+'\n\n';
   body+='### 검색 노출 설명\n\n'+desc+'\n\n';
   body+='### 카테고리\n\n'+cat+'\n\n';
+  body+='### 대표 이미지\n\n'+(thumb?'<img src="'+thumb+'" alt="'+title+'">\n\n':'');
+  body+='### 본문\n\n'+editorToPublishHtml()+'\n';
 
-  const firstImage=blocks.find(b=>b.type==='image'&&b.url);
-  body+='### 대표 이미지\n\n';
-  if(firstImage){
-    const img='<img src="'+firstImage.url+'" alt="'+(firstImage.alt||title)+'">';
-    body+=(firstImage.link?'<a href="'+firstImage.link+'" target="_blank" rel="noopener">'+img+'</a>':img)+'\n\n';
-  }
-
-  body+='### 본문\n\n';
-
-  blocks.forEach(b=>{
-    if(b.type==='text'&&b.text)body+=b.text.trim()+'\n\n';
-    if(b.type==='image'&&b.url){
-      const img='<img src="'+b.url+'" alt="'+(b.alt||'')+'">';
-      body+=(b.link?'<a href="'+b.link+'" target="_blank" rel="noopener">'+img+'</a>':img)+'\n\n';
-    }
-    if(b.type==='map'&&(b.name||b.address)){
-      body+='<div class="mapcard">\n<strong>📍 '+(b.name||'지도')+'</strong><br>\n'+(b.address||'')+'<br>\n';
-      if(b.mapLink)body+='<a href="'+b.mapLink+'" target="_blank" rel="noopener">지도에서 보기 →</a>\n';
-      body+='</div>\n\n';
-    }
-    if(b.type==='link'&&b.url){
-      body+='['+(b.label||b.url)+']('+b.url+')\n\n';
-    }
-  });
-
-  return {title,body};
+  try{await navigator.clipboard.writeText(body)}catch(e){}
+  window.open('https://github.com/hwsr6028-source/hwsr6028-source.github.io/issues/new?title='+encodeURIComponent(title),'_blank');
+  alert('발행용 내용이 복사되었습니다. 새 GitHub 화면의 본문에 Ctrl+V 후 Create를 눌러주세요.');
 }
 
-async function publish(){
-  const data=buildBody();
-  if(!data)return;
-
-  try{
-    await navigator.clipboard.writeText(data.body);
-  }catch(e){}
-
-  const url='https://github.com/hwsr6028-source/hwsr6028-source.github.io/issues/new?title='+encodeURIComponent(data.title);
-  window.open(url,'_blank');
-  alert('발행용 내용이 복사되었습니다. 새 GitHub 화면의 본문에 Ctrl+V로 붙여넣고 Create를 눌러주세요.');
-}
-
-addBlock('text',{text:''});
 renderPreview();
 </script>
 </body>
