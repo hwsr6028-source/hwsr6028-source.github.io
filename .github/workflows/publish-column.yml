@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   publish:
-    if: startsWith(github.event.issue.title, '[칼럼]')
+    if: contains(github.event.issue.body, '### 글 제목') || contains(github.event.issue.body, '### 제목')
     runs-on: ubuntu-latest
 
     steps:
