@@ -28,7 +28,7 @@ permalink: /
     <a href="{{ '/blog/insight/' | relative_url }}">전체보기 →</a>
   </div>
 
-  <div class="article-grid">
+  <div class="article-grid" id="latest-articles">
     {% for post in site.posts limit:6 %}
     <article class="article-card">
       <a href="{{ post.url | relative_url }}">
@@ -51,3 +51,66 @@ permalink: /
   </div>
 </section>
 </main>
+
+
+<script>
+(function(){
+  const grid=document.getElementById('latest-articles');
+  if(!grid) return;
+
+  const api='https://api.github.com/repos/hwsr6028-source/hwsr6028-source.github.io/contents/_posts?ref=main';
+
+  const esc=s=>String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+  function parseFrontMatter(text){
+    const m=text.match(/^---\s*\n([\s\S]*?)\n---/);
+    if(!m) return {};
+    const out={};
+    m[1].split('\n').forEach(line=>{
+      const i=line.indexOf(':');
+      if(i<0) return;
+      const k=line.slice(0,i).trim();
+      let v=line.slice(i+1).trim();
+      if((v.startsWith('"')&&v.endsWith('"'))||(v.startsWith("'")&&v.endsWith("'"))) v=v.slice(1,-1);
+      out[k]=v.replace(/\\\"/g,'"').replace(/\\\\/g,'\\');
+    });
+    return out;
+  }
+
+  function slugFromName(name){
+    return name.replace(/^\d{4}-\d{2}-\d{2}-/,'').replace(/\.md$/,'');
+  }
+
+  function card(p){
+    const url='/insight/'+encodeURI(p.slug)+'/';
+    const thumb=p.thumbnail
+      ? '<div class="thumb thumb-image"><img src="'+esc(p.thumbnail)+'" alt="'+esc(p.title)+'"></div>'
+      : '<div class="thumb thumb-empty"><span>병원정보 칼럼</span></div>';
+    const date=(p.date||'').slice(0,10).replace(/-/g,'.');
+    return '<article class="article-card"><a href="'+url+'">'+thumb+
+      '<span class="tag">'+esc(p.category||'')+'</span>'+
+      '<h3>'+esc(p.title||'')+'</h3>'+
+      '<p>'+esc(p.description||'')+'</p>'+
+      '<small>'+esc(date)+'</small></a></article>';
+  }
+
+  fetch(api,{cache:'no-store'})
+    .then(r=>{if(!r.ok) throw new Error('list'); return r.json();})
+    .then(files=>{
+      const recent=files.filter(f=>f.type==='file'&&f.name.endsWith('.md'))
+        .sort((a,b)=>b.name.localeCompare(a.name))
+        .slice(0,12);
+      return Promise.all(recent.map(f=>fetch(f.download_url,{cache:'no-store'}).then(r=>r.text()).then(t=>{
+        const fm=parseFrontMatter(t);
+        return {...fm,slug:slugFromName(f.name)};
+      })));
+    })
+    .then(posts=>{
+      posts.sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
+      const six=posts.slice(0,6);
+      if(six.length) grid.innerHTML=six.map(card).join('');
+    })
+    .catch(()=>{});
+})();
+</script>
+
